@@ -7,8 +7,11 @@
 
 /** Structure describing the ring buffer. */
 typedef struct {
-    char dataBuff[100];
-    size_t sizeData;
+	/// Compose your structure here!
+  	char *data;//address of the given table
+	int size;
+	int head ;
+	int tail ;
 } RingBuffer;
 
 

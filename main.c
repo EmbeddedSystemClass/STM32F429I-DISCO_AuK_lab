@@ -1,5 +1,10 @@
 #include "stm32f4xx_hal.h"
 #include "delay.h"
+#include "ring_buffer_unit_test.h"
+#include "ring_buffer.h"
+#include "usart.h"
+#include "core.h"
+#include "usart_unit_test.h"
 
 #define __GPIOG_CLK_ENABLE()     (RCC->AHB1ENR |= (RCC_AHB1ENR_GPIOGEN))
 
@@ -9,6 +14,7 @@ int executionTime=0;
  * This function configures the LED pins
  */
   
+ 
 void LED_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct;
@@ -37,23 +43,45 @@ void SysTick_Handler(void)
 
 int main(void)
 {
+	 char c;
+	char c2[10];
+   USART_Init();
+	
+//	USART_WriteString("Hello world\n\r");
+	//USART_WriteData("Hello world\n\r",10);
+	//USART_PutChar('c');	
+	
   // Initialize STM32Cube HAL library
   HAL_Init();
   // Initialize LED pins
   LED_Init();
-  
+  USART_UnitTest();
   // Blink the LED on pin PG.13
-  while (1) {
+  //while (1) {
+	
+	 // USART_PutChar('c');	
+	//if(USART_GetChar(&c)){
+  //  USART_PutChar(c);
+	//	 USART_PutChar(c);
+//	}
+	
+//	if(USART_ReadData(c2,10))
+//	{
+//		USART_WriteString(c2);	
+//	USART_PutChar('\n');		
+	//}
     // turn the LED on
-    HAL_GPIO_WritePin(GPIOG, GPIO_PIN_13, GPIO_PIN_SET);
+ //   HAL_GPIO_WritePin(GPIOG, GPIO_PIN_13, GPIO_PIN_SET);
     // introduce some delay
-    delay(100);
+ //   delay(100);
     // turn the LED off
-    HAL_GPIO_WritePin(GPIOG, GPIO_PIN_13, GPIO_PIN_RESET);
-    // introduce some delay
-    delay(100);
-	printf("Program execution time: %ds\n\r", executionTime++);
-  } // while (1)   
+ //   HAL_GPIO_WritePin(GPIOG, GPIO_PIN_13, GPIO_PIN_RESET);
+  //  // introduce some delay
+  //  delay(100);
+//	printf("Program execution time: %ds\n\r", executionTime++);
+  //} // while (1)   
 	
 }  
+  
+
 
