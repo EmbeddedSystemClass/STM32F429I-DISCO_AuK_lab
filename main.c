@@ -5,8 +5,11 @@
 #include "usart.h"
 #include "core.h"
 #include "usart_unit_test.h"
+#include "cli.h"
 
 #define __GPIOG_CLK_ENABLE()     (RCC->AHB1ENR |= (RCC_AHB1ENR_GPIOGEN))
+
+
 
 extern int ticks;
 int executionTime=0;
@@ -14,7 +17,11 @@ int executionTime=0;
  * This function configures the LED pins
  */
   
- 
+void commandLED()
+{
+	HAL_GPIO_TogglePin(GPIOG, GPIO_PIN_13);	
+}
+
 void LED_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct;
@@ -55,10 +62,55 @@ int main(void)
   HAL_Init();
   // Initialize LED pins
   LED_Init();
-  USART_UnitTest();
+ // USART_UnitTest();
   // Blink the LED on pin PG.13
-  //while (1) {
-	
+CLI_CommandItem wrong_item = { .callback = NULL,
+                            .commandName = "WrongItemThisShouldn'tBeAdded",
+                            .description = NULL};
+        
+CLI_CommandItem item_LED = { .callback = commandLED,
+                          .commandName = "LED1",
+                          .description = NULL};
+
+CLI_CommandItem item_LED2 = { .callback = commandLED,
+                          .commandName = "LED2",
+                          .description = NULL};
+ 
+CLI_CommandItem item_LED3 = { .callback = commandLED,
+                          .commandName = "LED3",
+                          .description = NULL};
+
+ CLI_CommandItem item_LED4 = { .callback = commandLED,
+                          .commandName = "LED5",
+                          .description = NULL};
+						  
+CLI_CommandItem item_LED5 = { .callback = commandLED,
+                          .commandName = "LED6",
+                          .description = NULL};
+ 
+ 
+if(CLI_AddCommand(&wrong_item) == false){
+    USART_WriteString("ERROR in adding new item.\n\r");
+}
+commandLED();
+if(CLI_AddCommand(&item_LED) == false){
+    USART_WriteString("ERROR in adding new item.\n\r");
+}commandLED();
+if(CLI_AddCommand(&item_LED2) == false){
+    USART_WriteString("ERROR in adding new item.\n\r");
+}commandLED();
+if(CLI_AddCommand(&item_LED3) == false){
+    USART_WriteString("ERROR in adding new item.\n\r");
+}commandLED();
+if(CLI_AddCommand(&item_LED4) == false){
+    USART_WriteString("ERROR in adding new item.\n\r");
+}commandLED();
+if(CLI_AddCommand(&item_LED5) == false){
+    USART_WriteString("ERROR in adding new item.\n\r");
+}commandLED();
+CLI_PrintAllCommands();
+  while (1) {
+	CLI_Proc();
 	 // USART_PutChar('c');	
 	//if(USART_GetChar(&c)){
   //  USART_PutChar(c);
@@ -79,7 +131,7 @@ int main(void)
   //  // introduce some delay
   //  delay(100);
 //	printf("Program execution time: %ds\n\r", executionTime++);
-  //} // while (1)   
+  } // while (1)   
 	
 }  
   

@@ -5,7 +5,7 @@
 #include "ring_buffer.h"
 #include "stm32f4xx_hal.h"
 #include "stm32f4xx_hal_rcc.h"
-
+#include "core.h"
 
 /* Private definitions -------------------------------------------------------*/
 
@@ -48,22 +48,25 @@ static UART_HandleTypeDef UartHandle;
 
 
 bool USART_PutChar(char c){
-			
+	//CORE_EnterCriticalSection();		
 	if (RingBuffer_PutChar(&USART_RingBuffer_Tx,c)==true) {
+			//	CORE_ExitCriticalSection();
 		__USART_ENABLE_IT(&UartHandle, USART_IT_TXE);
 		return true;
 	}
+//	CORE_ExitCriticalSection();
 	return false;
 }
 
 
 size_t USART_WriteData(const void *data, size_t dataSize){
-	size_t i=0;
-	const char* dataBuf = (const char*)data;
-	for (i=0;i<dataSize;i++)
-	{	
-		if (RingBuffer_PutChar(&USART_RingBuffer_Tx,*(dataBuf)++)!=true) return 0;
-	}	
+	size_t i = 0;
+	for(i = 0; i < dataSize; i++){
+		if (RingBuffer_PutChar(&USART_RingBuffer_Tx, (((char*)(data))[i])) != true){
+			return 0;
+		}
+	}
+	__USART_ENABLE_IT(&UartHandle, USART_IT_TXE);
 	return i;
 }
 
@@ -81,8 +84,9 @@ size_t USART_WriteString(const char *string){
 
 
 bool USART_GetChar(char *c){
-	
-	if (RingBuffer_GetChar(&USART_RingBuffer_Rx,c)==true) { return true;}	
+	CORE_EnterCriticalSection();
+	if (RingBuffer_GetChar(&USART_RingBuffer_Rx,c)==true) { 	CORE_ExitCriticalSection(); return true;}	
+	CORE_ExitCriticalSection();
 	return false;
 }
 
@@ -108,8 +112,7 @@ char znak;
 	if (__HAL_USART_GET_FLAG(&UartHandle, USART_FLAG_RXNE)) {
 		// the RXNE interrupt has occurred
 		if (__HAL_USART_GET_IT_SOURCE(&UartHandle, USART_IT_RXNE)) {
-				RingBuffer_PutChar(&USART_RingBuffer_Rx,USART1->DR);
-									
+				RingBuffer_PutChar(&USART_RingBuffer_Rx,USART1->DR);									
 		}
 	}
 	
