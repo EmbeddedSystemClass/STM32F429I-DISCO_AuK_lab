@@ -91,6 +91,7 @@ void CLI_PrintAllCommands(void){
 
 CLI_CommandItem* CLI_GetMenuItemByCommandName(char *command){
 	
+<<<<<<< HEAD
 	CLI_CommandItem* xoxo;
 	
 	while (head!=NULL)
@@ -102,6 +103,8 @@ CLI_CommandItem* CLI_GetMenuItemByCommandName(char *command){
 			xoxo->next=head->next;			
 		}return xoxo;	
 	}
+=======
+>>>>>>> 9dd82ba2f879500a287fcdaf4b76b0320d40ae78
 	
 	return NULL;
 };
@@ -109,6 +112,7 @@ CLI_CommandItem* CLI_GetMenuItemByCommandName(char *command){
 void CLI_StringToLower(char *dst, const char *src){
 	//todo proszę wykorzystać funkcje z biblioteki ctype.h
 }
+<<<<<<< HEAD
 
 
 bool CLI_StoreCommand(){
@@ -133,4 +137,23 @@ bool CLI_StoreCommand(){
 	
 	//else return false;
 		
+=======
+int o=0;
+bool CLI_StoreCommand(){
+	char sign;	//1znak
+	
+	if (o>10)
+		USART_WriteString(commandBuffer);
+	if (USART_GetChar(&sign)) 
+	{	commandBuffer[o]=sign;
+		//USART_PutChar(sign);
+	
+		USART_WriteString(&commandBuffer[o]);
+		o++;
+		return true;
+	}
+	
+	
+	else return false;
+>>>>>>> 9dd82ba2f879500a287fcdaf4b76b0320d40ae78
 }

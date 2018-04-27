@@ -17,7 +17,14 @@ int executionTime=0;
  * This function configures the LED pins
  */
   
+<<<<<<< HEAD
 
+=======
+void commandLED()
+{
+	HAL_GPIO_TogglePin(GPIOG, GPIO_PIN_13);	
+}
+>>>>>>> 9dd82ba2f879500a287fcdaf4b76b0320d40ae78
 
 void LED_Init(void)
 {
@@ -111,6 +118,7 @@ CLI_CommandItem item_LED5 = { .callback = commandLED,
 if(CLI_AddCommand(&wrong_item) == false){
     USART_WriteString("ERROR in adding new item.\n\r");
 }
+<<<<<<< HEAD
 commandLED(1);
 
 if(CLI_AddCommand(&item_LED) == false){
@@ -135,6 +143,25 @@ if(CLI_AddCommand(&item_LED5) == false){
 
 CLI_PrintAllCommands();
 
+=======
+commandLED();
+if(CLI_AddCommand(&item_LED) == false){
+    USART_WriteString("ERROR in adding new item.\n\r");
+}commandLED();
+if(CLI_AddCommand(&item_LED2) == false){
+    USART_WriteString("ERROR in adding new item.\n\r");
+}commandLED();
+if(CLI_AddCommand(&item_LED3) == false){
+    USART_WriteString("ERROR in adding new item.\n\r");
+}commandLED();
+if(CLI_AddCommand(&item_LED4) == false){
+    USART_WriteString("ERROR in adding new item.\n\r");
+}commandLED();
+if(CLI_AddCommand(&item_LED5) == false){
+    USART_WriteString("ERROR in adding new item.\n\r");
+}commandLED();
+CLI_PrintAllCommands();
+>>>>>>> 9dd82ba2f879500a287fcdaf4b76b0320d40ae78
   while (1) {
 	CLI_Proc();
 	 // USART_PutChar('c');	
