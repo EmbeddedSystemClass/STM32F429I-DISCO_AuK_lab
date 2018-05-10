@@ -37,3 +37,14 @@
 .\objects\main.o: core.h
 .\objects\main.o: usart_unit_test.h
 .\objects\main.o: cli.h
+.\objects\main.o: .\FreeRTOS\include\FreeRTOS.h
+.\objects\main.o: .\FreeRTOS\portable\RVDS\ARM_CM4F\FreeRTOSConfig.h
+.\objects\main.o: .\FreeRTOS\include\projdefs.h
+.\objects\main.o: .\FreeRTOS\include\portable.h
+.\objects\main.o: .\FreeRTOS\include\deprecated_definitions.h
+.\objects\main.o: .\FreeRTOS\portable\RVDS\ARM_CM4F\portmacro.h
+.\objects\main.o: .\FreeRTOS\include\mpu_wrappers.h
+.\objects\main.o: .\FreeRTOS\include\task.h
+.\objects\main.o: .\FreeRTOS\include\list.h
+.\objects\main.o: trace.h
+.\objects\main.o: .\FreeRTOS\include\task.h

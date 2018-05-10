@@ -28,20 +28,18 @@ Project File Date:  05/10/2018
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'Target 1'
 compiling main.c...
-main.c(10): warning:  #47-D: incompatible redefinition of macro "__GPIOG_CLK_ENABLE"  (declared at line 2045 of "C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.13.0\Drivers\STM32F4xx_HAL_Driver\Inc\Legacy/stm32_hal_legacy.h")
-  #define __GPIOG_CLK_ENABLE()     (RCC->AHB1ENR |= (RCC_AHB1ENR_GPIOGEN))
-main.c(55): warning:  #223-D: function "strcmp" declared implicitly
+trace.h(54): warning:  #47-D: incompatible redefinition of macro "traceTASK_SWITCHED_IN"  (declared at line 336 of ".\FreeRTOS\include\FreeRTOS.h")
+  #define traceTASK_SWITCHED_IN()  													\
+trace.h(66): warning:  #47-D: incompatible redefinition of macro "traceTASK_INCREMENT_TICK"  (declared at line 529 of ".\FreeRTOS\include\FreeRTOS.h")
+  #define traceTASK_INCREMENT_TICK(xTickCount)	 TRACE_Toggle(0)
+main.c(114): warning:  #223-D: function "strcmp" declared implicitly
       if(strcmp(args, "on") == 0){
-main.c(67): warning:  #223-D: function "strcmp" declared implicitly
+main.c(126): warning:  #223-D: function "strcmp" declared implicitly
       if(strcmp(args, "on") == 0){
-main.c(80): warning:  #177-D: variable "c"  was declared but never referenced
-  	 char c;
-main.c(81): warning:  #177-D: variable "c2"  was declared but never referenced
-  	char c2[10];
-main.c: 5 warnings, 0 errors
+main.c: 4 warnings, 0 errors
 linking...
-Program Size: Code=4280 RO-data=564 RW-data=36 ZI-data=3876  
-".\Objects\pierwszy.axf" - 0 Error(s), 5 Warning(s).
+Program Size: Code=10776 RO-data=564 RW-data=232 ZI-data=80984  
+".\Objects\pierwszy.axf" - 0 Error(s), 4 Warning(s).
 
 <h2>Software Packages used:</h2>
 
