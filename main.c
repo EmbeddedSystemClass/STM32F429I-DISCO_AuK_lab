@@ -17,14 +17,7 @@ int executionTime=0;
  * This function configures the LED pins
  */
   
-<<<<<<< HEAD
 
-=======
-void commandLED()
-{
-	HAL_GPIO_TogglePin(GPIOG, GPIO_PIN_13);	
-}
->>>>>>> 9dd82ba2f879500a287fcdaf4b76b0320d40ae78
 
 void LED_Init(void)
 {
@@ -35,6 +28,11 @@ void LED_Init(void)
  
   // Configure GPIO pin PG13
   GPIO_InitStruct.Pin   = GPIO_PIN_13;
+  GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;        // push-pull output
+  GPIO_InitStruct.Pull  = GPIO_PULLDOWN;              // pull-down enabled
+  GPIO_InitStruct.Speed = GPIO_SPEED_LOW;             // analog pin bandwidth limited
+  HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
+	GPIO_InitStruct.Pin   = GPIO_PIN_14;
   GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;        // push-pull output
   GPIO_InitStruct.Pull  = GPIO_PULLDOWN;              // pull-down enabled
   GPIO_InitStruct.Speed = GPIO_SPEED_LOW;             // analog pin bandwidth limited
@@ -50,6 +48,9 @@ void SysTick_Handler(void)
    ticks++;        
 } /* SysTick_Handler */
 
+//void commandLED(){
+//	HAL_GPIO_TogglePin(GPIOG, GPIO_PIN_13);
+//}
 void commandLED(char *args){
     if(strcmp(args, "on") == 0){
         // turn the LED on
@@ -95,73 +96,33 @@ CLI_CommandItem wrong_item = { .callback = NULL,
                             .description = NULL};
         
 CLI_CommandItem item_LED = { .callback = commandLED,
-                          .commandName = "LED1",
+                          .commandName = "led1",
                           .description = NULL};
 
-CLI_CommandItem item_LED2 = { .callback = commandLED,
-                          .commandName = "LED2",
+CLI_CommandItem item_LED2 = { .callback = commandLED2,
+                          .commandName = "led2",
                           .description = NULL};
  
-CLI_CommandItem item_LED3 = { .callback = commandLED,
-                          .commandName = "LED3",
-                          .description = NULL};
 
- CLI_CommandItem item_LED4 = { .callback = commandLED,
-                          .commandName = "LED5",
-                          .description = NULL};
-						  
-CLI_CommandItem item_LED5 = { .callback = commandLED,
-                          .commandName = "LED6",
-                          .description = NULL};
- 
  
 if(CLI_AddCommand(&wrong_item) == false){
     USART_WriteString("ERROR in adding new item.\n\r");
 }
-<<<<<<< HEAD
-commandLED(1);
+//commandLED(1);
 
 if(CLI_AddCommand(&item_LED) == false){
     USART_WriteString("ERROR in adding new item.\n\r");
-}commandLED(2);
+}
+//commandLED(2);
 
 if(CLI_AddCommand(&item_LED2) == false){
     USART_WriteString("ERROR in adding new item.\n\r");
-}commandLED(3);
-
-if(CLI_AddCommand(&item_LED3) == false){
-    USART_WriteString("ERROR in adding new item.\n\r");
-}commandLED(4);
-
-if(CLI_AddCommand(&item_LED4) == false){
-    USART_WriteString("ERROR in adding new item.\n\r");
-}commandLED(5);
-
-if(CLI_AddCommand(&item_LED5) == false){
-    USART_WriteString("ERROR in adding new item.\n\r");
-}commandLED(6);
+}//commandLED(3);
+//HAL_GPIO_WritePin(GPIOG, GPIO_PIN_13, GPIO_PIN_SET);
+//HAL_GPIO_WritePin(GPIOG, GPIO_PIN_14, GPIO_PIN_SET);
 
 CLI_PrintAllCommands();
 
-=======
-commandLED();
-if(CLI_AddCommand(&item_LED) == false){
-    USART_WriteString("ERROR in adding new item.\n\r");
-}commandLED();
-if(CLI_AddCommand(&item_LED2) == false){
-    USART_WriteString("ERROR in adding new item.\n\r");
-}commandLED();
-if(CLI_AddCommand(&item_LED3) == false){
-    USART_WriteString("ERROR in adding new item.\n\r");
-}commandLED();
-if(CLI_AddCommand(&item_LED4) == false){
-    USART_WriteString("ERROR in adding new item.\n\r");
-}commandLED();
-if(CLI_AddCommand(&item_LED5) == false){
-    USART_WriteString("ERROR in adding new item.\n\r");
-}commandLED();
-CLI_PrintAllCommands();
->>>>>>> 9dd82ba2f879500a287fcdaf4b76b0320d40ae78
   while (1) {
 	CLI_Proc();
 	 // USART_PutChar('c');	
