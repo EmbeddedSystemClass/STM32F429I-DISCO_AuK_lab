@@ -3,6 +3,10 @@
 #define _TRACE_H_
 
 #include <stdint.h>
+<<<<<<< HEAD
+=======
+#include "task.h"
+>>>>>>> 827e14f1f944406cef1cdb998ab0b297511468cb
 
 /** 
  * Initializes pins that will be used as trace signals.
