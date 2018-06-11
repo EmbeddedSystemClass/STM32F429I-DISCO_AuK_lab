@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "ring_buffer.h"
 
+
 bool RingBuffer_UnitTest(void)
 {
 	RingBuffer buffer;

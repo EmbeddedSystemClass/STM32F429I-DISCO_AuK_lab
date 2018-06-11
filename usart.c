@@ -36,12 +36,12 @@
 // UART transmit buffer descriptor
 static RingBuffer USART_RingBuffer_Tx;
 // UART transmit buffer memory pool
-static char RingBufferData_Tx[1024];
+static char RingBufferData_Tx[2048];
 
 // UART receive buffer descriptor
 static RingBuffer USART_RingBuffer_Rx;
 // UART receive buffer memory pool
-static char RingBufferData_Rx[1024];
+static char RingBufferData_Rx[2048];
 
 /// UART descriptor
 static UART_HandleTypeDef UartHandle;

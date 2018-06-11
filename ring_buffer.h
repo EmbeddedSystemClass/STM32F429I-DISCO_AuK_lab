@@ -1,28 +1,3 @@
-//#ifndef _RING_BUFFER_
-//#define _RING_BUFFER_
-
-//#include <stdint.h>
-//#include <stdbool.h>
-//#include <stddef.h>
-
-//typedef struct {
-//	char *dataBuffer;
-//	int dataBufferSize;
-//	int writePos;
-//    int readPos;
-//} RingBuffer;
-
-
-//bool RingBuffer_Init(RingBuffer *ringBuffer, char *dataBuffer, size_t dataBufferSize);
-//bool RingBuffer_Clear(RingBuffer *ringBuffer);
-//bool RingBuffer_IsEmpty(const RingBuffer *ringBuffer);
-//size_t RingBuffer_GetLen(const RingBuffer *ringBuffer);
-//size_t RingBuffer_GetCapacity(const RingBuffer *ringBuffer);
-//bool RingBuffer_PutChar(RingBuffer *ringBuffer, char c);
-//bool RingBuffer_GetChar(RingBuffer *ringBuffer, char *c);
-
-
-//#endif //_RING_BUFFER_
 #ifndef _RING_BUFFER_
 #define _RING_BUFFER_
 
@@ -32,10 +7,11 @@
 
 /** Structure describing the ring buffer. */
 typedef struct {
-	char * buffer;
-	int tail;
-	int length;
-	int buff_size;
+	/// Compose your structure here!
+  	char *data;//address of the given table
+	int size;
+	int head ;
+	int tail ;
 } RingBuffer;
 
 

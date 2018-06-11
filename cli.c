@@ -3,6 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 
+
 // head of CLI command list
 static CLI_CommandItem *head = NULL;
 static CLI_CommandItem *element =NULL;
@@ -45,11 +46,25 @@ static bool CLI_StoreCommand(void);
  * @param src pointer to string which will be converted
  */
 static void CLI_StringToLower(char *dst, const char *src);
-	
+	uint32_t a;
 	
 	
 void CLI_Proc(void){
-	CLI_StoreCommand(); //CYKLICZNIE
+	if(CLI_StoreCommand()){
+			if(commandBuffer[0] == '?')		CLI_PrintAllCommands();
+					
+			CLI_CommandItem *ptr = CLI_GetMenuItemByCommandName(commandBuffer);
+			
+			if(ptr != NULL)	{
+				if (commandBuffer[5]=='o' && commandBuffer[6]=='n') 	{ USART_WriteString("LED'S ON\n\r"); ptr->callback("on");commandBuffer[5]= NULL; commandBuffer[6]=NULL;} 
+				else 
+				if (commandBuffer[5]=='o' && commandBuffer[6]=='f'&& commandBuffer[7]=='f'){USART_WriteString("LED'S OFF\n\r");	ptr->callback("off");	commandBuffer[5]= NULL; commandBuffer[6]=NULL;commandBuffer[7]= NULL;	}	
+				else
+				ptr->callback(NULL);
+			}
+			else	USART_WriteString("Wrong command\n\r");
+				
+	}
 }
 
 bool CLI_AddCommand(CLI_CommandItem *item){
@@ -72,47 +87,63 @@ bool CLI_AddCommand(CLI_CommandItem *item){
 				}
 				element->next = item;
 				return true;
-			}
-		
-	}
-	
+			}		
+	}	
 	return false;
 }
 
 void CLI_PrintAllCommands(void){
-		element=head;
-		USART_WriteString(element->commandName);		//if 
-	do 
-	{	element=element->next;	
-		USART_WriteString(element->commandName);	
-	}	
-	while (element->next !=NULL);
+	
+	CLI_CommandItem *temp = head;
+	
+		while(temp != NULL){
+			USART_WriteString("nazwa polecenia: \n\r");
+			USART_WriteString(temp->commandName);
+			USART_WriteString("\n\r");
+			USART_WriteString("opis polecenia: \n\r");
+			USART_WriteString(temp->description);
+			USART_WriteString("\n\r");
+			temp = temp->next;
+			
+	}
 }
 
 CLI_CommandItem* CLI_GetMenuItemByCommandName(char *command){
 	
+	CLI_CommandItem *ptr = head;	//Ustawienie wskaznika na poczatek listy
+	while(1){
+		if (memcmp(ptr->commandName,command,4) == 0) 
+		{return ptr;			
+		}
+		else if(ptr->next == NULL){			
+			return NULL;			//jezeli to koniec listy zwroc NULL
+		}
+		else{								
+			ptr = ptr->next;		//inaczej podmien ptr
+		}
+	}
 	
 	return NULL;
 };
 
 void CLI_StringToLower(char *dst, const char *src){
-	//todo proszę wykorzystać funkcje z biblioteki ctype.h
+		//todo proszę wykorzystać funkcje z biblioteki ctype.h
+	*dst=tolower(*src);//zakladajac ze dst jest wyjsciowym
 }
-int o=0;
 bool CLI_StoreCommand(){
-	char sign;	//1znak
-	
-	if (o>10)
-		USART_WriteString(commandBuffer);
-	if (USART_GetChar(&sign)) 
-	{	commandBuffer[o]=sign;
-		//USART_PutChar(sign);
-	
-		USART_WriteString(&commandBuffer[o]);
-		o++;
-		return true;
+	static int index;	//Przechowujemy ststyczny index listy
+	char temp;			
+	if(USART_GetChar(&temp)){ //Sprawdza czy dostalismy cos przez USART
+		USART_PutChar(temp);	//echo
+		CLI_StringToLower(&temp,&temp);
+		commandBuffer[index] = temp; //Dodanie do bofora
+		if((commandBuffer[index] == '\r') | (index == 99)){	//Sprawdza czy to juz koniec komendy
+			USART_PutChar('\n');
+			index = 0;
+			return true;
+		}
+		index++;
 	}
 	
-	
-	else return false;
+	return false;
 }
